@@ -1,4 +1,4 @@
-package com.github.technus.sunvoxlib.model.object;
+package com.github.technus.sunvoxlib.model;
 
 
 import com.github.technus.sunvoxlib.model.Slot;
