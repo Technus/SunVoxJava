@@ -1,4 +1,4 @@
-package com.github.technus.sunvoxlib.model.object.module;
+package com.github.technus.sunvoxlib.model.module;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.AccessMode;

@@ -1,12 +1,12 @@
-package com.github.technus.sunvoxlib.model.object.module;
+package com.github.technus.sunvoxlib.model.module;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
-import com.github.technus.sunvoxlib.model.object.Slot;
+import com.github.technus.sunvoxlib.model.Slot;
 
 import java.io.File;
 
 import static com.github.technus.sunvoxlib.model.SunVoxException.voidIfOk;
-import static com.github.technus.sunvoxlib.model.object.module.ModuleInternalType.SAMPLER;
+import static com.github.technus.sunvoxlib.model.module.ModuleInternalType.SAMPLER;
 
 public class SamplerModule extends ModuleInternal {
     public SamplerModule(Slot slot, String name, int x, int y, int z) {

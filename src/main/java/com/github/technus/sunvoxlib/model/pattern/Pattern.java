@@ -1,8 +1,8 @@
-package com.github.technus.sunvoxlib.model.object.pattern;
+package com.github.technus.sunvoxlib.model.pattern;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.MuteStatus;
-import com.github.technus.sunvoxlib.model.object.Slot;
+import com.github.technus.sunvoxlib.model.Slot;
 
 import static com.github.technus.sunvoxlib.model.SunVoxException.intIfOk;
 

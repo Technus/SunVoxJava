@@ -1,6 +1,6 @@
-package com.github.technus.sunvoxlib.model.object.module;
+package com.github.technus.sunvoxlib.model.module;
 
-import com.github.technus.sunvoxlib.model.object.Slot;
+import com.github.technus.sunvoxlib.model.Slot;
 
 public class ModuleInternal extends Module {
 

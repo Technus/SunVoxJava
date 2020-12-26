@@ -1,9 +1,9 @@
-package com.github.technus.sunvoxlib.model.object.module;
+package com.github.technus.sunvoxlib.model.module;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.Channel;
 import com.github.technus.sunvoxlib.model.number.ModuleFlag;
-import com.github.technus.sunvoxlib.model.object.Slot;
+import com.github.technus.sunvoxlib.model.Slot;
 
 import java.io.File;
 import java.util.List;

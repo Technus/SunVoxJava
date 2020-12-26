@@ -1,10 +1,13 @@
 package com.github.technus.sunvoxlib.model.object;
 
 
+import com.github.technus.sunvoxlib.model.Slot;
+import com.github.technus.sunvoxlib.model.SunVox;
+
 import java.io.File;
 
 import static com.github.technus.sunvoxlib.model.number.InitializationFlag.AUDIO_FLOAT32;
-import static com.github.technus.sunvoxlib.model.object.SunVox.getInstance;
+import static com.github.technus.sunvoxlib.model.SunVox.getInstance;
 
 class SunVoxTest {
     public static void main(String[] args) throws InterruptedException{

@@ -1,4 +1,4 @@
-package com.github.technus.sunvoxlib.model.object.module;
+package com.github.technus.sunvoxlib.model.module;
 
 import com.github.technus.sunvoxlib.model.mapping.IString;
 import com.github.technus.sunvoxlib.model.mapping.StringMapping;

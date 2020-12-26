@@ -1,8 +1,8 @@
-package com.github.technus.sunvoxlib.model.object;
+package com.github.technus.sunvoxlib.model;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.NoteCommand;
-import com.github.technus.sunvoxlib.model.object.module.Module;
+import com.github.technus.sunvoxlib.model.module.Module;
 
 import static com.github.technus.sunvoxlib.model.SunVoxException.voidIfOk;
 

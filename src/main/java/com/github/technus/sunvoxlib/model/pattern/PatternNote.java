@@ -1,4 +1,4 @@
-package com.github.technus.sunvoxlib.model.object.pattern;
+package com.github.technus.sunvoxlib.model.pattern;
 
 import com.sun.jna.Structure;
 import com.sun.jna.Union;

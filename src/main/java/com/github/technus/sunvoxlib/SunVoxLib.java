@@ -2,7 +2,7 @@ package com.github.technus.sunvoxlib;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
-import com.github.technus.sunvoxlib.model.object.pattern.PatternNote;
+import com.github.technus.sunvoxlib.model.pattern.PatternNote;
 
 import java.io.File;
 
