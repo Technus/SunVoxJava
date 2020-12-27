@@ -10,7 +10,7 @@ import java.io.File;
 public class SunVoxLib {
     static {
         String path = new File("natives").getAbsolutePath() + File.separator +
-                (Platform.is64Bit()?"x86_64":"x86") + File.separator + "sunvox";
+                Platform.ARCH + File.separator + "sunvox";
         System.out.println(path);
         Native.register(path);
     }
