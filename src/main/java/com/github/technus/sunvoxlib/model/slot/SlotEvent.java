@@ -21,10 +21,10 @@ public class SlotEvent implements IEvent {
      * @param value value of the controller CC or parameter of the effect EE
      */
     public SlotEvent(int note, int vel, Module module, ModuleControl control, PatternEffect effect, int value) {
-        if (note <= 0 || note >= 128) {
+        if (note < 0 || note > 128) {
             throw new RuntimeException("Note out of range!");
         }
-        if (vel <= 0 || vel >= 129) {
+        if (vel < 0 || vel > 129) {
             throw new RuntimeException("Velocity out of range!");
         }
         this.note = (byte) note;
@@ -108,16 +108,17 @@ public class SlotEvent implements IEvent {
 
     @Override
     public int getModuleId() {
-        return module.getId();
+        return getModule()==null?0:getModule().getIdForEvent();
     }
 
     @Override
     public int getControlId() {
-        return control.getId();
+        return getControl()==null?0:getControl().getIdForEvent();
     }
 
+    @Override
     public int getEffectId(){
-        return effect.getValue();
+        return getEffect()==null?0:getEffect().getIdForEvent();
     }
 
     @Override

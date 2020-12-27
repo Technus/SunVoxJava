@@ -21,6 +21,10 @@ public class ModuleControl {
         return id;
     }
 
+    public int getIdForEvent(){
+        return getId()+1;
+    }
+
     /**
      * Get the name of the specified module controller
      * @return controller name or null

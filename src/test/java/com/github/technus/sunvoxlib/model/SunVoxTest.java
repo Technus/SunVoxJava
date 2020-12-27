@@ -1,18 +1,40 @@
 package com.github.technus.sunvoxlib.model;
 
 
+import com.github.technus.sunvoxlib.model.module.Module;
 import com.github.technus.sunvoxlib.model.slot.Slot;
+import com.github.technus.sunvoxlib.model.slot.SlotEvent;
+import com.github.technus.sunvoxlib.model.slot.SlotTrack;
 
 import java.io.File;
 
-import static com.github.technus.sunvoxlib.model.number.InitializationFlag.AUDIO_FLOAT32;
 import static com.github.technus.sunvoxlib.model.SunVox.getInstance;
+import static com.github.technus.sunvoxlib.model.module.ModuleInternalType.*;
+import static com.github.technus.sunvoxlib.model.number.InitializationFlag.AUDIO_FLOAT32;
 
 class SunVoxTest {
     public static void main(String[] args) throws InterruptedException{
         try(SunVox sunVox =getInstance()){
             sunVox.init(48_000, AUDIO_FLOAT32);
             try(Slot slot = new Slot(sunVox, 0)){
+                slot.lock();
+
+                Module output = new Module(slot);
+                Module genny1 = new Module(slot, ANALOG_GENERATOR,"Gen1");
+                Module genny2 = new Module(slot, GENERATOR,"Gen2");
+                Module vibrato = new Module(slot, VIBRATO,"Vib1");
+                slot.connectModule(genny1,output);
+                slot.connectModule(genny2,output);
+                slot.connectModule(genny1,vibrato);
+                slot.connectModule(vibrato,output);
+
+                SlotTrack slotTrack = new SlotTrack(slot, 0);
+                SlotEvent slotEvent = new SlotEvent(20, 0, genny1,null,null,0);
+                slotTrack.sendEvent(slotEvent);
+
+                Thread.sleep(100);
+                slot.stop();
+
                 slot.load(new File("C:\\Users\\danie\\Desktop\\sunvox\\b ass 1.sunvox"));
                 slot.play();
                 Thread.sleep(slot.getSongLengthFrames()*1000L/ sunVox.getSampleRate());

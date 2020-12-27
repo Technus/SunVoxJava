@@ -73,4 +73,8 @@ public class PatternEffect implements IInteger {
     public int getValue() {
         return id;
     }
+
+    public int getIdForEvent(){
+        return getValue();
+    }
 }

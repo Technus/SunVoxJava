@@ -16,7 +16,19 @@ public class Module implements AutoCloseable {
     private final Slot slot;
     private final int id;
 
-    protected Module(Slot slot, ModuleInternalType type, String name, int x, int y, int z) {
+    public Module(Slot slot, ModuleInternalType type, String name) {
+        this(slot,type, name, 512, 512, 0);
+    }
+
+    public Module(Slot slot, File file) {
+        this(slot,file, 512, 512, 0);
+    }
+
+    public Module(Slot slot, byte[] data) {
+        this(slot,data, 512, 512, 0);
+    }
+
+    public Module(Slot slot, ModuleInternalType type, String name, int x, int y, int z) {
         this.slot = slot;
         this.id = newModule(type, name, x, y, z);
     }
@@ -29,6 +41,15 @@ public class Module implements AutoCloseable {
     public Module(Slot slot, byte[] data, int x, int y, int z) {
         this.slot = slot;
         this.id = loadModuleFromMemory(data, x, y, z);
+    }
+
+    /**
+     * Output module
+     * @param slot slot to attach to
+     */
+    public Module(Slot slot){
+        this.slot=slot;
+        this.id=0;
     }
 
     public Module(Slot slot,String name){
@@ -47,6 +68,10 @@ public class Module implements AutoCloseable {
 
     public int getId() {
         return id;
+    }
+
+    public int getIdForEvent(){
+        return getId()+1;
     }
 
     @Override
