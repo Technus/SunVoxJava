@@ -1,8 +1,7 @@
 package com.github.technus.sunvoxlib.model;
 
 
-import com.github.technus.sunvoxlib.model.Slot;
-import com.github.technus.sunvoxlib.model.SunVox;
+import com.github.technus.sunvoxlib.model.slot.Slot;
 
 import java.io.File;
 

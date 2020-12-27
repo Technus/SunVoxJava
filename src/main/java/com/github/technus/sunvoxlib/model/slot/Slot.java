@@ -1,6 +1,7 @@
-package com.github.technus.sunvoxlib.model;
+package com.github.technus.sunvoxlib.model.slot;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
+import com.github.technus.sunvoxlib.model.SunVox;
 import com.github.technus.sunvoxlib.model.module.Module;
 import com.github.technus.sunvoxlib.model.number.*;
 
@@ -314,7 +315,7 @@ public class Slot implements AutoCloseable {
     //region Events
 
     /**
-     * Set the timestamp of events to be sent by {@link Track#sendEvent}.
+     * Set the timestamp of events to be sent by {@link SlotTrack#sendEvent}.
      * Every event you send has a timestamp - this is the time when the event was generated (for example, when a key was pressed).
      * @param set event timing mode
      * @param t timestamp (in system ticks) for all further events

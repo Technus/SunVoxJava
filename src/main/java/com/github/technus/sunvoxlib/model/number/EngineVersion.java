@@ -1,6 +1,8 @@
 package com.github.technus.sunvoxlib.model.number;
 
-public class EngineVersion {
+import com.github.technus.sunvoxlib.model.mapping.IInteger;
+
+public class EngineVersion implements IInteger {
     private final int value;
 
     public EngineVersion(int value) {

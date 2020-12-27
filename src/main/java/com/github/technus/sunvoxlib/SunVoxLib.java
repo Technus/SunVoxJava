@@ -2,7 +2,7 @@ package com.github.technus.sunvoxlib;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
-import com.github.technus.sunvoxlib.model.pattern.PatternNote;
+import com.github.technus.sunvoxlib.model.pattern.PatternEvent;
 
 import java.io.File;
 
@@ -206,7 +206,7 @@ public class SunVoxLib {
 
     public static native String sv_get_pattern_name(int slot, int pat_num);
 
-    public static native PatternNote/*Array*/ sv_get_pattern_data(int slot, int pat_num);
+    public static native PatternEvent/*Array*/ sv_get_pattern_data(int slot, int pat_num);
 
     public static native int sv_pattern_mute(int slot, int pat_num, int mute);
 

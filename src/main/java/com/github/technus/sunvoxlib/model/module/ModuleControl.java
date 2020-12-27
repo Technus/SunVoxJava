@@ -4,6 +4,7 @@ import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.ScalingMode;
 
 public class ModuleControl {
+
     private final Module module;
     private final int id;
 

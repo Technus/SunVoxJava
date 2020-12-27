@@ -2,6 +2,7 @@ package com.github.technus.sunvoxlib.model;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.*;
+import com.github.technus.sunvoxlib.model.slot.Slot;
 
 import static com.github.technus.sunvoxlib.model.SunVoxException.intIfOk;
 import static com.github.technus.sunvoxlib.model.SunVoxException.voidIfOk;
@@ -16,6 +17,20 @@ public class SunVox implements AutoCloseable {
     @Override
     public void close() {
         deinit();
+    }
+
+    /**
+     *
+     * @param slot slot number
+     * @param track_num track number (within the virtual pattern)
+     * @param note 0 - nothing; 1..127 - note number; 128 - note off; 129, 130... - see {@link NoteCommand}
+     * @param vel velocity 1..129; 0 - default
+     * @param module 0 (empty) or module number + 1 (1..65535)
+     * @param ctl 0xCCEE; CC - controller number (1..255); EE - effect
+     * @param ctl_val value of the controller or parameter of the effect
+     */
+    public void sendEventRaw(int slot, int track_num, int note, int vel, int module, int ctl, int ctl_val) {
+        voidIfOk(SunVoxLib.sv_send_event(slot, track_num, note, vel, module, ctl, ctl_val));
     }
 
     //region Main

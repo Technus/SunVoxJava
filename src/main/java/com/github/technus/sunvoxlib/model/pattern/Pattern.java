@@ -2,7 +2,7 @@ package com.github.technus.sunvoxlib.model.pattern;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.MuteStatus;
-import com.github.technus.sunvoxlib.model.Slot;
+import com.github.technus.sunvoxlib.model.slot.Slot;
 
 import static com.github.technus.sunvoxlib.model.SunVoxException.intIfOk;
 
@@ -85,8 +85,8 @@ public class Pattern {
      * ...    | ...
      * @return array with the contents of the pattern or null
      */
-    public PatternNote[] getData() {
-        return (PatternNote[]) SunVoxLib.sv_get_pattern_data(getSlot().getId(), getId()).toArray(new PatternNote[
+    public PatternEvent[] getData() {
+        return (PatternEvent[]) SunVoxLib.sv_get_pattern_data(getSlot().getId(), getId()).toArray(new PatternEvent[
                 getTracks()* getLines()]);
     }
 
