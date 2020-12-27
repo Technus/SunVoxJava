@@ -214,7 +214,7 @@ public class Module implements AutoCloseable {
      * @param file file
      * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
      */
-    public void load(File file, int sample_slot) {
+    public void samplerLoad(File file, int sample_slot) {
         voidIfOk(SunVoxLib.sv_sampler_load(getSlot().getId(), getId(), file.getAbsolutePath(), sample_slot));
     }
 
@@ -225,7 +225,7 @@ public class Module implements AutoCloseable {
      * @param data byte array with file contents
      * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
      */
-    public void loadFromMemory(byte[] data, int sample_slot) {
+    public void samplerLoadFromMemory(byte[] data, int sample_slot) {
         voidIfOk(SunVoxLib.sv_sampler_load_from_memory(getSlot().getId(), getId(), data, sample_slot));
     }
 
