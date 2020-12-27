@@ -206,7 +206,6 @@ public class Module implements AutoCloseable {
 
     //region sampler
 
-
     /**
      * Load the sample (wav, aiff) to the already created Sampler module.
      * For WAV and AIFF: only uncompressed PCM format is supported.
