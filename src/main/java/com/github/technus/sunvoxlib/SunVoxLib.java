@@ -8,8 +8,7 @@ import java.io.File;
 
 public class SunVoxLib {
     static {
-        String path = new File(new File("natives").getAbsolutePath() + File.separator +
-                System.mapLibraryName("sunvox")).getAbsolutePath();
+        String path = new File("natives").getAbsolutePath() + File.separator + "sunvox";
         System.out.println(path);
         Native.register(path);
     }

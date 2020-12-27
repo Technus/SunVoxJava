@@ -28,11 +28,16 @@ class SunVoxTest {
                 slot.connectModule(genny1,vibrato);
                 slot.connectModule(vibrato,output);
 
+                slot.unlock();
+
                 SlotTrack slotTrack = new SlotTrack(slot, 0);
-                SlotEvent slotEvent = new SlotEvent(20, 0, genny1,null,null,0);
+                SlotEvent slotEvent = new SlotEvent(30, 0, genny1,null,null,0);
+
+                slot.play();
+
                 slotTrack.sendEvent(slotEvent);
 
-                Thread.sleep(100);
+                Thread.sleep(1000);
                 slot.stop();
 
                 slot.load(new File("C:\\Users\\danie\\Desktop\\sunvox\\b ass 1.sunvox"));

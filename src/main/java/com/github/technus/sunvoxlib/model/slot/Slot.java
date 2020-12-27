@@ -72,6 +72,11 @@ public class Slot implements AutoCloseable {
         return false;
     }
 
+    public void forceLock(){
+        unlock();
+        lock();
+    }
+
     public void unlock(){
         if(getOwner()!=null){
             synchronized (this){
