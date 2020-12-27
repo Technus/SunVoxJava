@@ -1,8 +1,8 @@
 package com.github.technus.sunvoxlib.model;
 
 import com.github.technus.sunvoxlib.SunVoxLib;
-import com.github.technus.sunvoxlib.model.number.*;
 import com.github.technus.sunvoxlib.model.module.Module;
+import com.github.technus.sunvoxlib.model.number.*;
 
 import java.io.File;
 

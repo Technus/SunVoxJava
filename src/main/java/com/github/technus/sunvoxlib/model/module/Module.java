@@ -16,7 +16,7 @@ public class Module implements AutoCloseable {
     private final Slot slot;
     private final int id;
 
-    protected Module(Slot slot, String type, String name, int x, int y, int z) {
+    protected Module(Slot slot, ModuleInternalType type, String name, int x, int y, int z) {
         this.slot = slot;
         this.id = newModule(type, name, x, y, z);
     }
@@ -34,6 +34,11 @@ public class Module implements AutoCloseable {
     public Module(Slot slot,String name){
         this.slot=slot;
         this.id=getSlot().findModule(name);
+    }
+
+    public Module(Slot slot,int id){
+        this.slot=slot;
+        this.id=id;
     }
 
     public Slot getSlot() {
@@ -64,9 +69,9 @@ public class Module implements AutoCloseable {
      * @param z layer number from 0 to 7
      * @return the number of the newly created module
      */
-    protected int newModule(String type, String name, int x, int y, int z) {
+    protected int newModule(ModuleInternalType type, String name, int x, int y, int z) {
         getSlot().throwIfDoesntHoldLock();
-        return intIfOk(SunVoxLib.sv_new_module(getSlot().getId(), type, name, x, y, z));
+        return intIfOk(SunVoxLib.sv_new_module(getSlot().getId(), type.getValue(), name, x, y, z));
     }
 
     /**
@@ -198,4 +203,31 @@ public class Module implements AutoCloseable {
     public int getNumberOfCtls() {
         return intIfOk(SunVoxLib.sv_get_number_of_module_ctls(getSlot().getId(), getId()));
     }
+
+    //region sampler
+
+
+    /**
+     * Load the sample (wav, aiff) to the already created Sampler module.
+     * For WAV and AIFF: only uncompressed PCM format is supported.
+     * To replace the whole sampler - set sample_slot to -1.
+     * @param file file
+     * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
+     */
+    public void load(File file, int sample_slot) {
+        voidIfOk(SunVoxLib.sv_sampler_load(getSlot().getId(), getId(), file.getAbsolutePath(), sample_slot));
+    }
+
+    /**
+     * Load the sample (wav, aiff) to the already created Sampler module.
+     * For WAV and AIFF: only uncompressed PCM format is supported.
+     * To replace the whole sampler - set sample_slot to -1.
+     * @param data byte array with file contents
+     * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
+     */
+    public void loadFromMemory(byte[] data, int sample_slot) {
+        voidIfOk(SunVoxLib.sv_sampler_load_from_memory(getSlot().getId(), getId(), data, sample_slot));
+    }
+
+    //endregion
 }
