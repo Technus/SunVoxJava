@@ -5,12 +5,47 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.technus</groupId>
-    <artifactId>SunvoxLib</artifactId>
+    <artifactId>sunvoxjava</artifactId>
     <version>1.0.0.0</version>
 
+    <name>SunVoxJava</name>
+    <description>SunVox Wrapper for Java</description>
+    <url>https://github.com/Technus/SunVoxJava</url>
+
+    <licenses>
+        <license>
+            <name>Unlicense</name>
+            <url>https://unlicense.org</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Technus</name>
+            <url>https://github.com/orgs/BlueNation/people/Technus</url>
+            <organization>BlueNation</organization>
+            <organizationUrl>https://github.com/BlueNation</organizationUrl>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Technus Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Technus/SunVoxJava</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/Technus/SunVoxJava.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Technus/SunVoxJava.git</developerConnection>
+        <url>https://github.com/Technus/SunVoxJava</url>
+    </scm>
+
     <properties>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -20,4 +55,17 @@
             <version>5.6.0</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
