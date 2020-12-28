@@ -6,8 +6,6 @@ You can use the [SunVoxLib.java](https://github.com/Technus/SunVoxJava/blob/mast
 or use the POJO wrapper [SunVox.java](https://github.com/Technus/SunVoxJava/blob/master/src/main/java/com/github/technus/sunvoxlib/model/SunVox.java)
 
 
-SunVox: https://warmplace.ru/soft/sunvox/
+[SunVox](https://warmplace.ru/soft/sunvox/)
 
-SunVoxLib: https://warmplace.ru/soft/sunvox/sunvox_lib.php https://github.com/warmplace/sunvox_dll
-
-Included only the win x64 binaries to keep the folder that is used for natives lookup.
+[SunVoxLib](https://warmplace.ru/soft/sunvox/sunvox_lib.php) [github mirror](https://github.com/warmplace/sunvox_dll)
