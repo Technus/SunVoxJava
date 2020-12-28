@@ -7,5 +7,7 @@ or use the POJO wrapper [SunVox.java](https://github.com/Technus/SunVoxJava/blob
 
 
 [SunVox](https://warmplace.ru/soft/sunvox/) © Alexander Zolotov nightradio@gmail.com
+
 [SunVoxLib](https://warmplace.ru/soft/sunvox/sunvox_lib.php)  © Alexander Zolotov nightradio@gmail.com
+
 [github mirror](https://github.com/warmplace/sunvox_dll)
