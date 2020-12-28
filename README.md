@@ -2,8 +2,8 @@
 ### SunVox Wrapper for Java
 
 
-You can use the ```com.github.technus.sunvoxlib.SunVoxLib``` class directly, 
-or use the POJO wrapper ```com.github.technus.sunvoxlib.model.SunVox```
+You can use the https://github.com/Technus/SunVoxJava/blob/master/src/main/java/com/github/technus/sunvoxlib/SunVoxLib.java class directly, 
+or use the POJO wrapper https://github.com/Technus/SunVoxJava/blob/master/src/main/java/com/github/technus/sunvoxlib/model/SunVox.java
 
 
 SunVox: https://warmplace.ru/soft/sunvox/
