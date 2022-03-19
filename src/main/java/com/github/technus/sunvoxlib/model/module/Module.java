@@ -129,7 +129,7 @@ public class Module implements AutoCloseable {
      * @return the number of the newly created module
      */
     protected int loadModuleFromMemory(byte[] data, int x, int y, int z) {
-        return intIfOk(SunVoxLib.sv_load_module_from_memory(getSlot().getId(), data, x, y, z));
+        return intIfOk(SunVoxLib.sv_load_module_from_memory(getSlot().getId(), data,data.length, x, y, z));
     }
 
     /**
@@ -250,7 +250,7 @@ public class Module implements AutoCloseable {
      * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
      */
     public void samplerLoadFromMemory(byte[] data, int sample_slot) {
-        voidIfOk(SunVoxLib.sv_sampler_load_from_memory(getSlot().getId(), getId(), data, sample_slot));
+        voidIfOk(SunVoxLib.sv_sampler_load_from_memory(getSlot().getId(), getId(), data,data.length, sample_slot));
     }
 
     //endregion

@@ -105,7 +105,9 @@ public class SunVoxLib {
 
     public static native int sv_load(int slot, String name);
 
-    public static native int sv_load_from_memory(int slot, byte[] data);
+    public static native int sv_load_from_memory(int slot, byte[] data,int data_size);
+
+    public static native int sv_save(int slot, String name);
 
     public static native int sv_play(int slot);
 
@@ -116,6 +118,8 @@ public class SunVoxLib {
     public static native int sv_pause(int slot);
 
     public static native int sv_resume(int slot);
+
+    public static native int sv_sync_resume(int slot);
 
     public static native int sv_set_autostop(int slot, int autostop);
 
@@ -159,11 +163,11 @@ public class SunVoxLib {
 
     public static native int sv_load_module(int slot, String name, int x, int y, int z);
 
-    public static native int sv_load_module_from_memory(int slot, byte[] data, int x, int y, int z);
+    public static native int sv_load_module_from_memory(int slot, byte[] data, int data_size, int x, int y, int z);
 
     public static native int sv_sampler_load(int slot, int sampler_module, String name, int sample_slot);
 
-    public static native int sv_sampler_load_from_memory(int slot, int sampler_module, byte[] data, int sample_slot);
+    public static native int sv_sampler_load_from_memory(int slot, int sampler_module, byte[] data, int data_size, int sample_slot);
 
     public static native int sv_get_number_of_modules(int slot);
 

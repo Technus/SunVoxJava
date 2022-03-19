@@ -147,7 +147,15 @@ public class Slot implements AutoCloseable {
      * @param data byte array with the project (to load from memory)
      */
     public void loadFromMemory(byte[] data) {
-        voidIfOk(SunVoxLib.sv_load_from_memory(getId(), data));
+        voidIfOk(SunVoxLib.sv_load_from_memory(getId(), data, data.length));
+    }
+
+    /**
+     * Save SunVox project to file
+     * @param file file
+     */
+    public void save(File file) {
+        voidIfOk(SunVoxLib.sv_save(getId(), file.getAbsolutePath()));
     }
 
     //endregion
@@ -187,6 +195,13 @@ public class Slot implements AutoCloseable {
      */
     public void resume() {
         voidIfOk(SunVoxLib.sv_resume(getId()));
+    }
+
+    /**
+     * wait for sync (pattern effect 0x33 on any slot) and resume the audio stream on the specified slot
+     */
+    public void syncResume() {
+        voidIfOk(SunVoxLib.sv_sync_resume(getId()));
     }
 
     /**

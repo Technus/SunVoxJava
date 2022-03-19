@@ -9,6 +9,7 @@ public class ModuleInternalType implements IString {
     public static final ModuleInternalType ANALOG_GENERATOR=new ModuleInternalType("Analog generator");
     public static final ModuleInternalType DRUM_SYNTH=new ModuleInternalType("DrumSynth");
     public static final ModuleInternalType FREQUENCY_MODULATOR=new ModuleInternalType("FM");
+    public static final ModuleInternalType FREQUENCY_MODULATOR_X=new ModuleInternalType("FMX");
     public static final ModuleInternalType GENERATOR=new ModuleInternalType("Generator");
     public static final ModuleInternalType INPUT=new ModuleInternalType("Input");
     public static final ModuleInternalType KICKER=new ModuleInternalType("Kicker");
@@ -23,6 +24,7 @@ public class ModuleInternalType implements IString {
     public static final ModuleInternalType DISTORTION=new ModuleInternalType("Distortion");
     public static final ModuleInternalType ECHO=new ModuleInternalType("Echo");
     public static final ModuleInternalType EQUALIZER=new ModuleInternalType("EQ");
+    public static final ModuleInternalType FAST_FOURUER_TRANSFORM=new ModuleInternalType("FFT");
     public static final ModuleInternalType FILTER=new ModuleInternalType("Filter");
     public static final ModuleInternalType FILTER_PRO=new ModuleInternalType("Filter Pro");
     public static final ModuleInternalType FLANGER=new ModuleInternalType("Flanger");
