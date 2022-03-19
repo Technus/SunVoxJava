@@ -42,7 +42,7 @@ class SunVoxTest {
 
                 slot.load(new File("b ass 1.sunvox"));
                 slot.play();
-                Thread.sleep(slot.getSongLengthFrames()*1000L/ sunVox.getSampleRate());
+                Thread.sleep(slot.getSongLengthFrames()/ sunVox.getSampleRate()*1000L);
             }
         }
     }
