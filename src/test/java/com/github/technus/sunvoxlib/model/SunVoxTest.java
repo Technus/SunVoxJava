@@ -17,6 +17,7 @@ class SunVoxTest {
         try(SunVox sunVox =getInstance()){
             sunVox.init(48_000, AUDIO_FLOAT32);
             try(Slot slot = new Slot(sunVox, 0)){
+                slot.volume(127);
                 slot.lock();
 
                 Module output = new Module(slot);
