@@ -1,18 +1,11 @@
 package com.github.technus.sunvoxlib;
 
 import com.github.technus.sunvoxlib.model.pattern.PatternEvent;
-import com.sun.jna.Native;
-import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
-
-import java.io.File;
 
 public class SunVoxLib {
     static {
-        String path = new File("natives").getAbsolutePath() + File.separator +
-                Platform.ARCH + File.separator + "sunvox";
-        System.out.println(path);
-        Native.register(path);
+        NativeLoader.loadSunVoxNatives();
     }
 
     public static final int GENERIC_ERROR_CODE = -1;
