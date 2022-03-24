@@ -17,7 +17,7 @@ class SunVoxTest {
         try(SunVox sunVox =getInstance()){
             sunVox.init(48_000, AUDIO_FLOAT32);
             try(Slot slot = new Slot(sunVox, 0)){
-                slot.volume(127);
+                slot.volume(64);
                 slot.lock();
 
                 Module output = new Module(slot);
@@ -43,7 +43,10 @@ class SunVoxTest {
 
                 slot.load(new File("b ass 1.sunvox"));
                 slot.play();
-                Thread.sleep(slot.getSongLengthFrames()/ sunVox.getSampleRate()*1000L);
+                long songLen = slot.getSongLengthFrames() / sunVox.getSampleRate() * 1000L;
+                Thread.sleep(songLen);//+ some timeout delay
+                slot.stop();
+                Thread.sleep(30000);//+ some timeout delay
             }
         }
     }

@@ -177,14 +177,14 @@ public class Slot implements AutoCloseable {
     }
 
     /**
-     * reset all SunVox activity and switch the engine to standby mode
+     * reset all SunVox activity and switch the engine to standby mode, but the sound is still echoing
      */
     public void stop() {
         voidIfOk(SunVoxLib.sv_stop(getId()));
     }
 
     /**
-     * pause the audio stream on the specified slot
+     * pause the audio stream on the specified slot, the sound is killed instantly
      */
     public void pause() {
         voidIfOk(SunVoxLib.sv_pause(getId()));
