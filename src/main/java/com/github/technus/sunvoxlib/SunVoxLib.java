@@ -17,6 +17,15 @@ public class SunVoxLib {
     public static final int NOTECMD_STOP = 131;
     public static final int NOTECMD_PLAY = 132;
     public static final int NOTECMD_SET_PITCH = 133; /* set the pitch specified in column XXYY, where 0x0000 - highest possible pitch, 0x7800 - lowest pitch (note C0); one semitone = 0x100 */
+    public static final int NOTECMD_PREV_TRACK = 134; // apply effects to the previous track
+    public static final int NOTECMD_PATPLAY_OFF = 135; // disable single pattern play mode (without STOP)
+    //=============== don't use these command from the pattern (jump_request variable must be used):
+    @Deprecated
+    public static final int NOTECMD_PREPARE_FOR_IMMEDIATE_JUMP = 136; 	// prepare for an immediate jump to line XXYY;
+                                                                        // use it ONLY before the NOTECMD_PLAY!
+    @Deprecated
+    public static final int NOTECMD_JUMP = 137;                         // jump to line XXYY
+    //===============
     public static final int NOTECMD_CLEAN_MODULE = 140; /** stop the module - clear its internal buffers and put it into standby mode **/
 
     public static final double LOG_2 = Math.log(2);
@@ -86,7 +95,11 @@ public class SunVoxLib {
     }
 
     /**
-       sv_init(), sv_deinit() - global sound system init/deinit
+     If SV_INIT_FLAG_OFFLINE is set: the default sample type is INT16.
+
+     If SV_INIT_FLAG_OFFLINE is not set: the default value is system-dependent; and the actual sample type may be different even if you specify it with SV_INIT_FLAG_USER_AUDIO_INT16/FLOAT32
+
+     sv_init(), sv_deinit() - global sound system init/deinit
        Parameters:
          config - string with additional configuration in the following format: "option_name=value|option_name=value";
                   example: "buffer=1024|audiodriver=alsa|audiodevice=hw:0,0";

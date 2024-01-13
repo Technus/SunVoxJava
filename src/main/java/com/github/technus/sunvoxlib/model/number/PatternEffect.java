@@ -13,9 +13,9 @@ public class PatternEffect implements IInteger {
     public static final PatternEffect VIBRATO=new PatternEffect(0x04);
     public static final PatternEffect PITCH_BEND_UP=new PatternEffect(0x05);
     public static final PatternEffect PITCH_BEND_DOWN=new PatternEffect(0x06);
+    public static final PatternEffect SET_SAMPLE_OFFSET_PERCENT=new PatternEffect(0x07);
     public static final PatternEffect ARPEGGIO=new PatternEffect(0x08);
     public static final PatternEffect SET_SAMPLE_OFFSET=new PatternEffect(0x09);
-    public static final PatternEffect SET_SAMPLE_OFFSET_PERCENT=new PatternEffect(0x07);
     public static final PatternEffect SLIDE_VELOCITY=new PatternEffect(0x0A);
     public static final PatternEffect SET_PLAYING_SPEED=new PatternEffect(0x0F);
     public static final PatternEffect FINE_SLIDE_UP=new PatternEffect(0x11);
@@ -24,6 +24,7 @@ public class PatternEffect implements IInteger {
     public static final PatternEffect CLEAR_FLAGS=new PatternEffect(0x14);
     public static final PatternEffect TRANSPOSE_MODULE=new PatternEffect(0x15);
     public static final PatternEffect RE_TRIGGER=new PatternEffect(0x19);
+    public static final PatternEffect FINE_VEL_SLIDE=new PatternEffect(0x1A);
     public static final PatternEffect CUT=new PatternEffect(0x1C);
     public static final PatternEffect DELAY=new PatternEffect(0x1D);
     public static final PatternEffect SET_BPM=new PatternEffect(0x1F);
@@ -44,6 +45,8 @@ public class PatternEffect implements IInteger {
     public static final PatternEffect CYCLIC_SHIFT_DOWN=new PatternEffect(0x39);
     public static final PatternEffect GENERATE_NEW_POLY_RHYTHM=new PatternEffect(0x3A);
     public static final PatternEffect COPY_TRACK_TO_PATTERN=new PatternEffect(0x3B);
+    public static final PatternEffect COPY_TRACK_FROM_PATTERN=new PatternEffect(0x3C);
+    public static final PatternEffect RANDOM=new PatternEffect(0x3D);
 
     /**
      *

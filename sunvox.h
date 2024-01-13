@@ -18,13 +18,19 @@
 /*
    Constants, data types and macros
 */
-
 #define NOTECMD_NOTE_OFF	128
 #define NOTECMD_ALL_NOTES_OFF	129 /* send "note off" to all modules */
 #define NOTECMD_CLEAN_SYNTHS	130 /* stop all modules - clear their internal buffers and put them into standby mode */
 #define NOTECMD_STOP		131
 #define NOTECMD_PLAY		132
 #define NOTECMD_SET_PITCH       133 /* set the pitch specified in column XXYY, where 0x0000 - highest possible pitch, 0x7800 - lowest pitch (note C0); one semitone = 0x100 */
+#define NOTECMD_PREV_TRACK	134 // apply effects to the previous track
+#define NOTECMD_PATPLAY_OFF	135 // disable single pattern play mode (without STOP)
+//=============== don't use these command from the pattern (jump_request variable must be used):
+#define NOTECMD_PREPARE_FOR_IMMEDIATE_JUMP 136 	// prepare for an immediate jump to line XXYY;
+						// use it ONLY before the NOTECMD_PLAY!
+#define NOTECMD_JUMP		137 // jump to line XXYY
+//===============
 #define NOTECMD_CLEAN_MODULE    140 /* stop the module - clear its internal buffers and put it into standby mode */
 
 typedef struct
