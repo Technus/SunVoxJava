@@ -1,13 +1,16 @@
 package com.github.technus.sunvoxlib.model.mapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class IntegerMapping<T extends IInteger> {
+public class IntegerMapping<T extends IInteger> implements Iterable<T> {
     private final Map<Integer,T> mapping=new HashMap<>();
+
+    @Override
+    public Iterator<T> iterator(){
+        return mapping.values().iterator();
+    }
 
     public void put(T obj){
         mapping.put(obj.getValue(),obj);

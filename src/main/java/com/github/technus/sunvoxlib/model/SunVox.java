@@ -4,6 +4,10 @@ import com.github.technus.sunvoxlib.SunVoxLib;
 import com.github.technus.sunvoxlib.model.number.*;
 import com.github.technus.sunvoxlib.model.slot.Slot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static com.github.technus.sunvoxlib.model.SunVoxException.*;
 
 public class SunVox implements AutoCloseable {
@@ -13,9 +17,35 @@ public class SunVox implements AutoCloseable {
         return INSTANCE;
     }
 
+    private volatile BufferType bufferType;
+    private volatile boolean useCallback;
+    private EngineVersion engineVersion;
+
     @Override
     public void close() {
         deinit();
+    }
+
+    public boolean isInitialized(){
+        return bufferType!=null;
+    }
+
+    public boolean isUsingCallbacks(){
+        if(!isInitialized())
+            throw new RuntimeException("Cannot check if callbacks are required on non initialized engine");
+        return useCallback;
+    }
+
+    public BufferType getBufferType(){
+        if(!isInitialized())
+            throw new RuntimeException("Cannot check if buffer type on non initialized engine");
+        return bufferType;
+    }
+
+    public EngineVersion getEngineVersion(){
+        if(!isInitialized())
+            throw new RuntimeException("Cannot check engine version on non initialized engine");
+        return engineVersion;
     }
 
     /**
@@ -73,15 +103,24 @@ public class SunVox implements AutoCloseable {
      * @param flags set of flags {@link InitializationFlag}
      * @return SunVox engine version
      */
-    protected EngineVersion init(String config, int freq, int channels, InitializationFlag... flags) {
-        return new EngineVersion(intIfOk(SunVoxLib.sv_init(config,freq,channels,InitializationFlag.ofAll(flags).getValue())));
+    protected synchronized EngineVersion init(String config, int freq, int channels, InitializationFlag... flags) {
+        if(isInitialized())
+            throw new RuntimeException("Was already initialized");
+        BufferType type = BufferType.forFlags(flags);
+        useCallback = Arrays.stream(flags).anyMatch(x->x.getValue()==InitializationFlag.USER_AUDIO_CALLBACK.getValue());
+        engineVersion = new EngineVersion(intIfOk(SunVoxLib.sv_init(config,freq,channels,InitializationFlag.ofAll(flags).getValue())));
+        bufferType = type;
+        return engineVersion;
     }
 
     /**
      * Global sound system deinitialization
      */
-    protected void deinit() {
+    protected synchronized void deinit() {
+        if(!isInitialized())
+            throw new RuntimeException("Was already deinitialized");
         voidIfOk(SunVoxLib.sv_deinit());
+        bufferType = null;
     }
 
     /**

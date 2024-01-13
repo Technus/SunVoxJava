@@ -85,10 +85,6 @@ public class SunVoxLib {
         return packShorts(packed[0],packed[1]);
     }
 
-    public static boolean isError(int returnValue) {
-        return returnValue < 0;
-    }
-
     /**
        sv_init(), sv_deinit() - global sound system init/deinit
        Parameters:
