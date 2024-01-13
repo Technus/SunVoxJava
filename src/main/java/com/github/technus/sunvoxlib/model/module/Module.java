@@ -6,8 +6,10 @@ import com.github.technus.sunvoxlib.model.number.ModuleFlag;
 import com.github.technus.sunvoxlib.model.slot.Slot;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.List;
 
+import static com.github.technus.sunvoxlib.SunVoxLib.*;
 import static com.github.technus.sunvoxlib.model.SunVoxException.*;
 
 public class Module implements AutoCloseable {
@@ -95,7 +97,7 @@ public class Module implements AutoCloseable {
      * @return the number of the newly created module
      */
     protected int newModule(ModuleInternalType type, String name, int x, int y, int z) {
-        getSlot().throwIfDoesntHoldLock();
+        getSlot().throwIfDoesNotHoldLock();
         return intIfOk(SunVoxLib.sv_new_module(getSlot().getId(), type.getValue(), name, x, y, z));
     }
 
@@ -137,16 +139,52 @@ public class Module implements AutoCloseable {
      * USE LOCK/UNLOCK!
      */
     protected void removeModule() {
-        getSlot().throwIfDoesntHoldLock();
+        getSlot().throwIfDoesNotHoldLock();
         voidIfOk(SunVoxLib.sv_remove_module(getSlot().getId(), getId()));
     }
 
     /**
      * Get flags of the specified module
-     * @return set of flags
+     * @return flags
      */
-    public List<ModuleFlag> getFlags() {
-        return ModuleFlag.MAPPING.getAllMatching(intIfNotGenericError(SunVoxLib.sv_get_module_flags(getSlot().getId(), getId())));
+    public int getModuleFlags() {
+        return intIfNotGenericError(SunVoxLib.sv_get_module_flags(getSlot().getId(), getId()));
+    }
+
+    /**
+     * Get flags of the specified module
+     * @return list of flags
+     */
+    public List<ModuleFlag> getModuleFlagsList() {
+        return ModuleFlag.MAPPING.getAllMatching(getModuleFlags());
+    }
+
+    public boolean isExisting(){
+        return ModuleFlag.EXISTS.contains(getModuleFlags());
+    }
+
+    public boolean isGenerator(){
+        return ModuleFlag.GENERATOR.contains(getModuleFlags());
+    }
+
+    public boolean isEffect(){
+        return ModuleFlag.EFFECT.contains(getModuleFlags());
+    }
+
+    public boolean isMuted(){
+        return ModuleFlag.MUTE.contains(getModuleFlags());
+    }
+
+    public boolean isSolo(){
+        return ModuleFlag.SOLO.contains(getModuleFlags());
+    }
+
+    public boolean isBypassed(){
+        return ModuleFlag.BYPASS.contains(getModuleFlags());
+    }
+
+    public int getNumberOfInputs(){
+        return SunVoxLib.numberOfModuleInputs(getModuleFlags());
     }
 
     /**
@@ -155,12 +193,18 @@ public class Module implements AutoCloseable {
      * @return array with the input links
      */
     public int[] getInputs() {
+        int count = getNumberOfInputs();
+        if(count == 0)
+            return EMPTY;
         try{
-            return SunVoxLib.sv_get_module_inputs(getSlot().getId(), getId()).getIntArray(0,
-                    SunVoxLib.numberOfModuleInputs(SunVoxLib.sv_get_module_flags(getSlot().getId(),getId())));
+            return SunVoxLib.sv_get_module_inputs(getSlot().getId(), getId()).getIntArray(0, count);
         }catch (NullPointerException e){
             return EMPTY;
         }
+    }
+
+    public int getNumberOfOutputs(){
+        return SunVoxLib.numberOfModuleOutputs(getModuleFlags());
     }
 
     /**
@@ -169,9 +213,11 @@ public class Module implements AutoCloseable {
      * @return array with the output links
      */
     public int[] getOutputs() {
+        int count = getNumberOfOutputs();
+        if(count == 0)
+            return EMPTY;
         try {
-            return SunVoxLib.sv_get_module_outputs(getSlot().getId(), getId()).getIntArray(0,
-                    SunVoxLib.numberOfModuleOutputs(SunVoxLib.sv_get_module_flags(getSlot().getId(), getId())));
+            return SunVoxLib.sv_get_module_outputs(getSlot().getId(), getId()).getIntArray(0, count);
         }catch (NullPointerException e){
             return EMPTY;
         }
@@ -182,7 +228,27 @@ public class Module implements AutoCloseable {
      * @return module name or null
      */
     public String getName() {
-        return SunVoxLib.sv_get_module_name(getSlot().getId(), getId());
+        return stringIfNotNull(SunVoxLib.sv_get_module_name(getSlot().getId(), getId()));
+    }
+
+    /**
+     * Get the module name
+     * @return module name or null
+     */
+    public void setName(String name) {
+        voidIfOk(SunVoxLib.sv_set_module_name(getSlot().getId(), getId(),name));
+    }
+
+    /**
+     * Get the module type
+     * @return module name or null
+     */
+    public String getType() {
+        return stringIfNotNull(SunVoxLib.sv_get_module_type(getSlot().getId(), getId()));
+    }
+
+    public ModuleInternalType getInternalType(){
+        return  ModuleInternalType.MAPPING.get(getType());
     }
 
     /**
@@ -190,8 +256,57 @@ public class Module implements AutoCloseable {
      * Normal working area: 0,0 ... 1024,1024. Center of the module view = 512,512.
      * @return module coordinates {X,Y}
      */
-    public int[] getXY() {
-        return SunVoxLib.unpackShorts(SunVoxLib.sv_get_module_xy(getSlot().getId(), getId()));
+    public int getXY() {
+        return SunVoxLib.sv_get_module_xy(getSlot().getId(), getId());
+    }
+
+    /**
+     * Get the module coordinates (XY)
+     * Normal working area: 0,0 ... 1024,1024. Center of the module view = 512,512.
+     * @return module coordinates {X,Y}
+     */
+    public int[] getArrayXY() {
+        return unpackShorts(getXY());
+    }
+
+    public int getX(){
+        return lowShort(getXY());
+    }
+
+    public int getY(){
+        return highShort(getXY());
+    }
+
+    /**
+     * Set the module coordinates (XY)
+     * Normal working area: 0,0 ... 1024,1024. Center of the module view = 512,512.
+     */
+    public void setArrayXY(int[] xy) {
+        setXY(xy[0],xy[1]);
+    }
+
+    /**
+     * Set the module coordinates (XY)
+     * Normal working area: 0,0 ... 1024,1024. Center of the module view = 512,512.
+     */
+    public void setXY(int xy) {
+        setXY(lowShort(xy),highShort(xy));
+    }
+
+    /**
+     * Set the module coordinates (XY)
+     * Normal working area: 0,0 ... 1024,1024. Center of the module view = 512,512.
+     */
+    public void setXY(int x, int y) {
+        voidIfOk(SunVoxLib.sv_set_module_xy(getSlot().getId(), getId(),x,y));
+    }
+
+    public void setX(int x){
+        setXY(x,getY());
+    }
+
+    public void setY(int y){
+        setXY(getX(),y);
     }
 
     /**
@@ -203,22 +318,93 @@ public class Module implements AutoCloseable {
     }
 
     /**
-     * Get the module relative note (transposition) and finetune (-256...0...256)
-     * @return module relative note (transposition) and finetune {note,fine tune}
+     * Get the module color
+     * @return module color 0x00BBGGRR
      */
-    public int[] getFineTune() {
-        return SunVoxLib.unpackShorts(SunVoxLib.sv_get_module_finetune(getSlot().getId(), getId()));
+    public void setColor(int color) {
+        voidIfOk(SunVoxLib.sv_set_module_color(getSlot().getId(), getId(),color));
+    }
+
+    /**
+     * Get the module relative note (transposition) and finetune (-256...0...256)
+     * @return module relative note (transposition) and finetune (-256...0...256) {fine tune,note}
+     */
+    public int getFineTuneAndRelNote() {
+        return SunVoxLib.sv_get_module_finetune(getSlot().getId(), getId());
+    }
+
+    /**
+     * Get the module relative note (transposition) and finetune (-256...0...256)
+     * @return module relative note (transposition) and finetune (-256...0...256) {fine tune,note}
+     */
+    @Deprecated
+    public int[] getArrayFineTuneAndRelNote() {
+        return unpackShorts(getFineTuneAndRelNote());
+    }
+
+    /**
+     * Get the module finetune (-256...0...256)
+     * @return module finetune
+     */
+    public int getFineTune() {
+        return lowShort(getFineTuneAndRelNote());
+    }
+
+    /**
+     * Get the module relative note (transposition)
+     * @return module relative note (transposition)
+     */
+    public int getRelNote() {
+        return highShort(getFineTuneAndRelNote());
+    }
+
+    /**
+     * Set the module relative note (transposition) and finetune (-256...0...256)
+     */
+    @Deprecated
+    public void setFineTuneAndRelNote(int[] values) {
+        setFineTune(values[0]);
+        setRelNote(values[1]);
+    }
+
+    /**
+     * Set the module relative note (transposition) and finetune (-256...0...256)
+     */
+    public void setFineTuneAndRelNote(int value) {
+        setFineTune(lowShort(value));
+        setRelNote(highShort(value));
+    }
+
+    /**
+     * Set the module relative note (transposition) and finetune (-256...0...256)
+     */
+    public void setFineTuneAndRelNote(int finetune, int relNote) {
+        setFineTune(finetune);
+        setRelNote(relNote);
+    }
+
+    /**
+     * Set the module finetune (-256...0...256)
+     */
+    public void setFineTune(int finetune) {
+        voidIfOk(SunVoxLib.sv_set_module_finetune(getSlot().getId(), getId(),finetune));
+    }
+
+    /**
+     * Set the module relative note (transposition)
+     */
+    public void setRelNote(int relNote) {
+        voidIfOk(SunVoxLib.sv_set_module_relnote(getSlot().getId(), getId(),relNote));
     }
 
     /**
      * Get the currently playing piece of sound from the output of the specified module
      * @param channel channel
      * @param dest_buf pointer to the buffer {@link Short} to store the audio fragment
-     * @param samples_to_read the number of samples to read from the module's output buffer
      * @return received number of samples (may be less or equal to samples_to_read)
      */
-    public int getScope2(Channel channel, short[] dest_buf, int samples_to_read) {
-        return SunVoxLib.sv_get_module_scope2(getSlot().getId(), getId(), channel.getValue(), dest_buf, samples_to_read);
+    public int getScope2(Channel channel, short[] dest_buf) {
+        return intIfOk(SunVoxLib.sv_get_module_scope2(getSlot().getId(), getId(), channel.getValue(), dest_buf, dest_buf.length));
     }
 
     /**
@@ -239,7 +425,9 @@ public class Module implements AutoCloseable {
      * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
      */
     public void samplerLoad(File file, int sample_slot) {
-        voidIfOk(SunVoxLib.sv_sampler_load(getSlot().getId(), getId(), file.getAbsolutePath(), sample_slot));
+        if(ModuleInternalType.SAMPLER.getValue().equals(getType()))
+            voidIfOk(SunVoxLib.sv_sampler_load(getSlot().getId(), getId(), file.getAbsolutePath(), sample_slot));
+        throw new RuntimeException("Module is not a sampler");
     }
 
     /**
@@ -250,7 +438,41 @@ public class Module implements AutoCloseable {
      * @param sample_slot slot number inside the Sampler, or -1 if you want to replace the whole module
      */
     public void samplerLoadFromMemory(byte[] data, int sample_slot) {
-        voidIfOk(SunVoxLib.sv_sampler_load_from_memory(getSlot().getId(), getId(), data,data.length, sample_slot));
+        if(ModuleInternalType.SAMPLER.getValue().equals(getType()))
+            voidIfOk(SunVoxLib.sv_sampler_load_from_memory(getSlot().getId(), getId(), data,data.length, sample_slot));
+        throw new RuntimeException("Module is not a sampler");
+    }
+
+    //endregion
+
+    //region vorbis player
+
+    public void vorbisLoad(File file){
+        if(ModuleInternalType.VORBIS_PLAYER.getValue().equals(getType()))
+            voidIfOk(SunVoxLib.sv_vplayer_load(getSlot().getId(), getId(), file.getAbsolutePath()));
+        throw new RuntimeException("Module is not a vorbis player");
+    }
+
+    public void vorbisLoadFromMemory(byte[] data){
+        if(ModuleInternalType.VORBIS_PLAYER.getValue().equals(getType()))
+            voidIfOk(SunVoxLib.sv_vplayer_load_from_memory(getSlot().getId(), getId(), data,data.length));
+        throw new RuntimeException("Module is not a vorbis player");
+    }
+
+    //endregion
+
+    //region meta module
+
+    public void metaModuleLoad(File file){
+        if(ModuleInternalType.META_MODULE.getValue().equals(getType()))
+            voidIfOk(SunVoxLib.sv_metamodule_load(getSlot().getId(), getId(), file.getAbsolutePath()));
+        throw new RuntimeException("Module is not a meta module");
+    }
+
+    public void metaModuleLoadFromMemory(byte[] data){
+        if(ModuleInternalType.META_MODULE.getValue().equals(getType()))
+            voidIfOk(SunVoxLib.sv_metamodule_load_from_memory(getSlot().getId(), getId(), data,data.length));
+        throw new RuntimeException("Module is not a meta module");
     }
 
     //endregion

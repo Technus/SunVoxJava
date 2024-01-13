@@ -7,8 +7,7 @@ import com.github.technus.sunvoxlib.model.number.*;
 
 import java.io.File;
 
-import static com.github.technus.sunvoxlib.model.SunVoxException.intIfOk;
-import static com.github.technus.sunvoxlib.model.SunVoxException.voidIfOk;
+import static com.github.technus.sunvoxlib.model.SunVoxException.*;
 
 public class Slot implements AutoCloseable {
     private final SunVox engine;
@@ -49,27 +48,23 @@ public class Slot implements AutoCloseable {
         return getOwner()==Thread.currentThread();
     }
 
-    public void throwIfDoesntHoldLock(){
+    public void throwIfDoesNotHoldLock(){
         if(!holdsLock()){
             throw new RuntimeException("Needs to hold lock!");
         }
     }
 
-    /**
-     *
-     * @return true if succeeded, false otherwise
-     */
-    public boolean lock(){
+    public void lock(){
         if(getOwner()==null){
             synchronized (this){
                 if(getOwner()==null){
                     setOwner(Thread.currentThread());
                     lockSlot();
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
+        throw new RuntimeException("Failed to acquire lock!");
     }
 
     public void forceLock(){
@@ -83,9 +78,11 @@ public class Slot implements AutoCloseable {
                 if(getOwner()!=null){
                     unlockSlot();
                     setOwner(null);
+                    return;
                 }
             }
         }
+        throw new RuntimeException("Failed to release lock!");
     }
 
     //region Main
@@ -216,16 +213,32 @@ public class Slot implements AutoCloseable {
      * Get autostop mode. When autostop is OFF, the project plays endlessly in a loop.
      * @return auto stop status
      */
-    public AutostopStatus getAutostop() {
-        return AutostopStatus.MAPPING.get(intIfOk(SunVoxLib.sv_get_autostop(getId())));
+    public int getAutostop() {
+        return intIfOk(SunVoxLib.sv_get_autostop(getId()));
+    }
+
+    /**
+     * Get autostop mode. When autostop is OFF, the project plays endlessly in a loop.
+     * @return auto stop status
+     */
+    public AutostopStatus getAutostopStatus() {
+        return AutostopStatus.MAPPING.get(getAutostop());
     }
 
     /**
      * Check if the project has finished playing
      * @return play status
      */
-    public PlayStatus endOfSong() {
-        return PlayStatus.MAPPING.get(intIfOk(SunVoxLib.sv_end_of_song(getId())));
+    public int endOfSong() {
+        return intIfOk(SunVoxLib.sv_end_of_song(getId()));
+    }
+
+    /**
+     * Check if the project has finished playing
+     * @return play status
+     */
+    public PlayStatus endSong() {
+        return PlayStatus.MAPPING.get(endOfSong());
     }
 
     /**
@@ -280,7 +293,15 @@ public class Slot implements AutoCloseable {
      * @return project name or null
      */
     public String getSongName() {
-        return SunVoxLib.sv_get_song_name(getId());
+        return stringIfNotNull(SunVoxLib.sv_get_song_name(getId()));
+    }
+
+    /**
+     * Get the project name
+     * @return project name or null
+     */
+    public void getSongName(String name) {
+        voidIfOk(SunVoxLib.sv_set_song_name(getId(),name));
     }
 
     /**
@@ -320,12 +341,11 @@ public class Slot implements AutoCloseable {
     /**
      * Get the project time map
      * @param start_line first line to read (usually 0)
-     * @param len number of lines to read
      * @param dest pointer to the buffer (size = len*sizeof({@link Integer})) for storing the map values
      * @param flags flags
      */
-    public void getTimeMap(int start_line, int len, int[] dest, TimeMapping flags) {
-        voidIfOk(SunVoxLib.sv_get_time_map(getId(), start_line, len, dest, flags.getValue()));
+    public void getTimeMap(int start_line, int[] dest, TimeMapping flags) {
+        voidIfOk(SunVoxLib.sv_get_time_map(getId(), start_line, dest.length, dest, flags.getValue()));
     }
 
     //endregion
@@ -359,6 +379,7 @@ public class Slot implements AutoCloseable {
     /**
      * Find a module by name
      * @param name module name
+     * @param name module name
      * @return module number
      */
     public int findModule(String name) {
@@ -372,7 +393,7 @@ public class Slot implements AutoCloseable {
      * @param destination destination (module number)
      */
     public void connectModule(Module source, Module destination) {
-        throwIfDoesntHoldLock();
+        throwIfDoesNotHoldLock();
         if(source.getSlot()==this && destination.getSlot()==this){
             voidIfOk(SunVoxLib.sv_connect_module(getId(), source.getId(), destination.getId()));
         }else {
@@ -387,7 +408,7 @@ public class Slot implements AutoCloseable {
      * @param destination destination (module number)
      */
     public void disconnectModule(Module source, Module destination) {
-        throwIfDoesntHoldLock();
+        throwIfDoesNotHoldLock();
         if(source.getSlot()==this && destination.getSlot()==this) {
             voidIfOk(SunVoxLib.sv_disconnect_module(getId(), source.getId(), destination.getId()));
         }

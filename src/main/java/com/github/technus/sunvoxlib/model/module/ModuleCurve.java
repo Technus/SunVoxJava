@@ -37,19 +37,18 @@ public class ModuleCurve {
      * Analog Generator, Generator:
      * 0 - X = drawn waveform sample number (0..31); Y = volume (-1..1); 32 items;
      * @param data destination or source buffer
-     * @param len number of items to read/write
      * @param w access mode
      * @return number of items processed successfully
      */
-    protected int curve(float[] data, int len, AccessMode w) {
-        return intIfOk(SunVoxLib.sv_module_curve(getModule().getSlot().getId(), getModule().getId(), getId(), data, len, w.getValue()));
+    protected int curve(float[] data, AccessMode w) {
+        return intIfOk(SunVoxLib.sv_module_curve(getModule().getSlot().getId(), getModule().getId(), getId(), data, data.length, w.getValue()));
     }
 
-    public int read(float[] dataOut,int len){
-        return curve(dataOut,len,AccessMode.READ);
+    public int read(float[] dataOut){
+        return curve(dataOut,AccessMode.READ);
     }
 
-    public int write(float[] data,int len){
-        return curve(data,len,AccessMode.WRITE);
+    public int write(float[] data){
+        return curve(data,AccessMode.WRITE);
     }
 }

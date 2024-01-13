@@ -30,6 +30,7 @@ public class SlotTrack {
      * @param event event
      */
     public void sendEvent(IEvent event) {
-        voidIfOk(SunVoxLib.sv_send_event(getSlot().getId(), getId(), event.getNote(), event.getVelocity(), event.getModuleId(), event.getCtl(), event.getValue()));
+        voidIfOk(SunVoxLib.sv_send_event(getSlot().getId(), getId(),
+                event.getNote(), event.getVelocity(), event.getModuleId(), event.getCtl(), event.getValue()));
     }
 }

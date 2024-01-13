@@ -8,6 +8,7 @@ public class ModuleFlag implements IInteger {
     public static final IntegerMapping<ModuleFlag> MAPPING=new IntegerMapping<>();
 
     public static final ModuleFlag EXISTS = new ModuleFlag(SunVoxLib.SV_MODULE_FLAG_EXISTS);
+    public static final ModuleFlag GENERATOR = new ModuleFlag(SunVoxLib.SV_MODULE_FLAG_GENERATOR);
     public static final ModuleFlag EFFECT = new ModuleFlag(SunVoxLib.SV_MODULE_FLAG_EFFECT);
     public static final ModuleFlag MUTE = new ModuleFlag(SunVoxLib.SV_MODULE_FLAG_MUTE);
     public static final ModuleFlag SOLO = new ModuleFlag(SunVoxLib.SV_MODULE_FLAG_SOLO);

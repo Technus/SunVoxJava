@@ -19,6 +19,19 @@ public class PatternEvent extends Structure implements IEvent {
     @Deprecated
     public short value;
 
+    public PatternEvent(){
+
+    }
+
+    public PatternEvent(byte note, byte vel, short module, byte control, byte effect, short value) {
+        this.note = note;
+        this.vel = vel;
+        this.module = module;
+        this.control = control;
+        this.effect = effect;
+        this.value = value;
+    }
+
     public int getNote() {
         return note&0xff;
     }

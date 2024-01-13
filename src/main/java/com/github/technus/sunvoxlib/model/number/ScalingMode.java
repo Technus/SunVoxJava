@@ -7,13 +7,20 @@ public class ScalingMode implements IInteger {
     public static final IntegerMapping<ScalingMode> MAPPING =new IntegerMapping<>();
 
     /**
-     * real value (0,1,2 etc.)
+     * real value (0,1,2 etc.) as it is stored inside the controller
+     * but the value displayed in the program interface may be different - you can use scaled=2 to get the displayed value;
      */
     public static final ScalingMode REAL=new ScalingMode(0);
     /**
-     * scaled for the pattern column XXYY (0x0000...0x8000)
+     * scaled (0x0000...0x8000) if the controller type = 0, or the real value if the controller type = 1 (enum);
+     * this value can be used in the pattern column XXYY;
      */
-    public static final ScalingMode PATTERN_COLUMN=new ScalingMode(1);
+    public static final ScalingMode SCALED=new ScalingMode(1);
+    /**
+     * final value displayed in the program interface -
+     * in most cases it is identical to the real value, and sometimes it has an additional offset;
+     */
+    public static final ScalingMode FINAL=new ScalingMode(2);
 
 
     private final int value;

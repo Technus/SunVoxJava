@@ -40,4 +40,11 @@ public class SunVoxException extends RuntimeException {
             throw new SunVoxException(returnValue);
         }
     }
+
+    public static String stringIfNotNull(String returnValue){
+        if(returnValue == null){
+            throw new NullPointerException();
+        }
+        return returnValue;
+    }
 }

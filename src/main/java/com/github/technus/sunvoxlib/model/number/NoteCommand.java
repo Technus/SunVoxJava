@@ -14,6 +14,7 @@ public class NoteCommand implements IInteger {
     public static final NoteCommand STOP = new NoteCommand(SunVoxLib.NOTECMD_STOP);
     public static final NoteCommand PLAY = new NoteCommand(SunVoxLib.NOTECMD_PLAY);
     public static final NoteCommand SET_PITCH = new NoteCommand(SunVoxLib.NOTECMD_SET_PITCH);
+    public static final NoteCommand CLEAN_MODULE = new NoteCommand(SunVoxLib.NOTECMD_CLEAN_MODULE);
 
     private final int value;
 

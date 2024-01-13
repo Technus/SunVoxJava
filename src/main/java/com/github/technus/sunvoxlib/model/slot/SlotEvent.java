@@ -97,7 +97,8 @@ public class SlotEvent implements IEvent {
         return control;
     }
 
-    public PatternEffect getEffect() {
+    @Override
+    public PatternEffect getPatternEffect() {
         return effect;
     }
 
@@ -118,7 +119,7 @@ public class SlotEvent implements IEvent {
 
     @Override
     public int getEffectId(){
-        return getEffect()==null?0:getEffect().getIdForEvent();
+        return getPatternEffect()==null?0: getPatternEffect().getIdForEvent();
     }
 
     @Override
